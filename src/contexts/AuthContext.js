@@ -4,7 +4,7 @@ import axios from "axios";
 export const authContext = React.createContext();
 export const useAuth = () => useContext(authContext);
 
-const API = "http://34.125.225.234";
+const API = "http://34.125.225.234/api/v1";
 
 const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(false);
@@ -14,10 +14,7 @@ const AuthContextProvider = ({ children }) => {
   async function handleRegister(formData, navigate) {
     setLoading(true);
     try {
-      const res = await axios.post(
-        `${API}/api/v1/accounts/register/`,
-        formData
-      );
+      const res = await axios.post(`${API}/accounts/register/`, formData);
       console.log(res);
       navigate("/login");
     } catch (err) {
@@ -32,7 +29,7 @@ const AuthContextProvider = ({ children }) => {
   async function handleLogin(formData, email, navigate) {
     setLoading(true);
     try {
-      const res = await axios.post(`${API}/login/`, formData);
+      const res = await axios.post(`${API}/accounts/login/`, formData);
       localStorage.setItem("tokens", JSON.stringify(res.data));
       localStorage.setItem("email", email);
       setCurrentUser(email);

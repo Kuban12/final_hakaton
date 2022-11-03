@@ -21,6 +21,7 @@ const RegistrationPage = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [passConfirm, setPassConfirm] = useState("");
+  const [image, setImage] = useState(null);
 
   const { register } = useAuth();
 
@@ -32,20 +33,17 @@ const RegistrationPage = () => {
   //   password2: passConfirm,
   // };
   function handleSave() {
-    if (
-      !name.trim() ||
-      !lastName.trim() ||
-      !email.trim()
- 
-    ) {
+    if (!name.trim() || !lastName.trim() || !email.trim()) {
       alert("Some inputs are empty!");
     } else {
+      console.log("HELLO", passConfirm);
       let formData = new FormData();
       formData.append("first_name", name);
       formData.append("last_name", lastName);
       formData.append("email", email);
-      formData.append("pasword", pass);
+      formData.append("password", pass);
       formData.append("password2", passConfirm);
+      formData.append("image", image);
       handleRegister(formData, navigate);
     }
   }
@@ -59,11 +57,9 @@ const RegistrationPage = () => {
 
   // }
 
-  
   useEffect(() => {
     setError(false);
   }, []);
-
 
   /////////////////////
   const [values, setValues] = React.useState({
@@ -76,7 +72,7 @@ const RegistrationPage = () => {
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
-    setPass ({...values, [prop]: event.target.value})
+    setPass(event.target.value);
   };
 
   const handleClickShowPassword = () => {
@@ -97,7 +93,7 @@ const RegistrationPage = () => {
 
   const handleChangee = (prop) => (event) => {
     setValues2({ ...values2, [prop]: event.target.value });
-    setPassConfirm ({...values, [prop]: event.target.value})
+    setPassConfirm(event.target.value);
   };
 
   const handleClickShowPassworde = () => {
@@ -196,6 +192,14 @@ const RegistrationPage = () => {
               label="Password"
             />
           </FormControl>
+
+          <div className="input__wrapper">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+          </div>
 
           <button className="custom-btn btn-4" onClick={handleSave}>
             <span>Подтвердить</span>
