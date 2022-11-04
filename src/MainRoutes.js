@@ -4,6 +4,8 @@ import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
+import BecomeAWorkerPage from "./pages/BecomeAWorkerPage";
+import CatalogPage from "./pages/CatalogPage";
 
 const MainRoutes = () => {
   const PUBLIC_ROUTES = [
@@ -22,15 +24,22 @@ const MainRoutes = () => {
       element: <RegistrationPage />,
       id: 3,
     },
-    
+    {
+      link: "/becomeAWorker",
+      element: <BecomeAWorkerPage />,
+      id: 4,
+    },
+    {
+      link: "/catalog",
+      element: <CatalogPage />,
+      id: 4,
+    },
     {
       link: "*",
       element: <NotFoundPage />,
       id: 10,
-    }
+    },
   ];
-
- 
 
   return (
     <Routes>
