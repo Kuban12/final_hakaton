@@ -1,6 +1,6 @@
+
 .work_categoryes_main{
     width: 100%;
-    height: 1200px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,14 +9,40 @@
     font-size: xx-large;
     color: black !important;
     font-weight: 700;
+    margin-top: 50px;
 }
 
-.work_categoryes_radios{
-    width: 90%;
-    height: 100%;
-    display: flex;
+.work_categories_radios{
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 50px;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: space-around !important;
 }
 
 .work_category_item{
-    width: 15%;
+    width: 25% !important;
+}
+
+.description{
+    display: flex;
+    justify-content: center;
+    width: 75%;
+    height: 40%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.price{
+    width: 75%;
+    margin: 0 auto;
+}
+
+.button{
+    width: 75%;
+    display: flex;
+    justify-content: end;
+    margin: 0 auto;
+    margin-bottom: 50px;
 }

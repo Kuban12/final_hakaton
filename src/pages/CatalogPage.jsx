@@ -6,7 +6,7 @@ const CatalogPage = () => {
   return (
     <>
       <Navbar />
-      <div class="sidenav">
+      <div className="sidenav">
         <button className="sidenav_btn">Все категории</button>
         <button className="sidenav_btn">Ремонт и строительство</button>
         <button className="sidenav_btn">Ремонт и установка техники</button>

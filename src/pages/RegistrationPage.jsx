@@ -4,6 +4,11 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
+
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
@@ -21,7 +26,9 @@ const RegistrationPage = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [passConfirm, setPassConfirm] = useState("");
+  const [phone, setPhone] = useState("");
   const [image, setImage] = useState(null);
+  const [executor, setExecutor] = useState("");
 
   const { register } = useAuth();
 
@@ -33,7 +40,14 @@ const RegistrationPage = () => {
   //   password2: passConfirm,
   // };
   function handleSave() {
-    if (!name.trim() || !lastName.trim() || !email.trim()) {
+    if (
+      !name.trim() ||
+      !lastName.trim() ||
+      !email.trim() ||
+      !pass.trim() ||
+      !passConfirm.trim() ||
+      !phone.trim()
+    ) {
       alert("Some inputs are empty!");
     } else {
       console.log("HELLO", passConfirm);
@@ -43,7 +57,10 @@ const RegistrationPage = () => {
       formData.append("email", email);
       formData.append("password", pass);
       formData.append("password2", passConfirm);
+      formData.append("phone_number", phone);
       formData.append("image", image);
+      formData.append("status", executor);
+      console.log(formData);
       handleRegister(formData, navigate);
     }
   }
@@ -118,7 +135,7 @@ const RegistrationPage = () => {
           <TextField
             sx={{ marginBottom: "10px", width: "50%" }}
             id="outlined-textarea"
-            label="name"
+            label="Имя"
             placeholder="Placeholder"
             multiline
             value={name}
@@ -127,7 +144,7 @@ const RegistrationPage = () => {
           <TextField
             sx={{ marginBottom: "6px", width: "50%" }}
             id="outlined-textarea"
-            label="lastName"
+            label="Фамилие"
             placeholder="Placeholder"
             multiline
             value={lastName}
@@ -137,16 +154,25 @@ const RegistrationPage = () => {
           <TextField
             sx={{ marginBottom: "10px", width: "50%" }}
             id="outlined-textarea"
-            label="Email"
+            label="Почта"
             placeholder="Placeholder"
             multiline
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          <TextField
+            sx={{ marginBottom: "10px", width: "50%" }}
+            id="outlined-textarea"
+            label="Номер"
+            placeholder="Placeholder"
+            multiline
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
 
           <FormControl sx={{ m: 1, width: "50%" }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
-              Password
+              Пароль
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
@@ -170,7 +196,7 @@ const RegistrationPage = () => {
           </FormControl>
           <FormControl sx={{ m: 1, width: "50%" }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
-              Confirm
+              Подтверждение
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
@@ -200,6 +226,29 @@ const RegistrationPage = () => {
               onChange={(e) => setImage(e.target.files[0])}
             />
           </div>
+
+          <FormControl className="register_executor_main">
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue="female"
+              name="radio-buttons-group"
+              onChange={(e) => setExecutor(e.target.value)}
+              className="register_executor"
+            >
+              <FormControlLabel
+                value="1"
+                control={<Radio />}
+                label="Пользователь"
+                className="register_executor_label"
+              />
+              <FormControlLabel
+                value="2"
+                control={<Radio />}
+                label="Исполнитель"
+                className="register_executor_label"
+              />
+            </RadioGroup>
+          </FormControl>
 
           <button className="custom-btn btn-4" onClick={handleSave}>
             <span>Подтвердить</span>

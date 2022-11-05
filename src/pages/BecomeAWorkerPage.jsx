@@ -10,15 +10,13 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 
-import { useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import Chip from "@mui/material/Chip";
-
 import TextField from "@mui/material/TextField";
 
 import InputAdornment from "@mui/material/InputAdornment";
 
 // custom imports
+import { useNavigate } from "react-router-dom";
+import { useWorkCreate } from "../contexts/WorkCreateContext";
 import "../styles/becomeAWorker.css";
 
 const ITEM_HEIGHT = 48;
@@ -32,47 +30,18 @@ const MenuProps = {
   },
 };
 
-const names = [
-  "Понедельник",
-  "Вторник",
-  "Среда",
-  "Четверг",
-  "Пятница",
-  "Суббота",
-  "Воскресенье",
-];
-
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
-
 const BecomeAWorkerPage = () => {
+  const { handleSaveWork, error1, setError1 } = useWorkCreate();
+  const navigate = useNavigate();
+  // const [name, setName] = useState("");
+  const name = "Kuban Kadyraliev";
   // category
   const [category, setCategory] = useState("");
   // for experiance
-  const [age, setAge] = React.useState("");
+  const [experiance, setExperiance] = useState("");
 
   const handleChangeExper = (event) => {
-    setAge(event.target.value);
-  };
-
-  //   for working days
-  const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
-
-  const handleChangeDay = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setExperiance(event.target.value);
   };
 
   //   for working hours
@@ -86,37 +55,63 @@ const BecomeAWorkerPage = () => {
     setHour2(event.target.value);
   };
 
+  // description
+  const [desc, setDesc] = useState("");
+
   //   for price
   const [price, setPrice] = React.useState("");
 
-  const handleChangePrice = (prop) => (event) => {
-    setPrice(event.target.value);
-  };
-
   // custom
   function handleSave() {
-    if (!name.trim() || !lastName.trim() || !email.trim()) {
-      alert("Some inputs are empty!");
-    } else {
-      console.log("HELLO", passConfirm);
-      let formData = new FormData();
-      formData.append("name_LastName", name);
-      formData.append("category", name);
-      formData.append("experiance", lastName);
-      formData.append("working_days", email);
-      formData.append("hour_from", pass);
-      formData.append("hour_to", passConfirm);
-      formData.append("description", image);
-      formData.append("price", image);
-      formData.append("image", image);
+    // if (
+    //   category == "" ||
+    //   experiance == ""
+    //   // days == [] ||
+    //   // hour1 == "" ||
+    //   // hour2 == "" ||
+    //   // desc == "" ||
+    //   // price == "" ||
+    //   // image !== File
+    // ) {
+    //   alert("Где-то не заполнено");
+    // } else {
+    console.log("HELLO");
+    let formData = new FormData();
+    formData.append("category", category);
+    formData.append("experiance", experiance);
+    formData.append("hour_from", hour1);
+    formData.append("hour_to", hour2);
+    formData.append("desc", desc);
+    formData.append("price", price);
+    handleSaveWork(formData, navigate);
 
-      handleRegister(formData, navigate);
-    }
+    setCategory("");
+    setExperiance("");
+    setHour1("");
+    setHour2("");
+    setDesc("");
+    setPrice("");
+    // }
   }
+
+  const handleConsole = () => {
+    // console.log("name_LastName", name);
+    console.log("category", category);
+    console.log("experiance", experiance);
+    console.log("hour_from", hour1);
+    console.log("hour_to", hour2);
+    console.log("description", desc);
+    console.log("price", price);
+  };
 
   return (
     <>
-      <FormControl className="work_categoryes_main">
+      <FormControl
+        className="work_categoryes_main"
+        style={{
+          width: "100%",
+        }}
+      >
         <FormLabel
           className="work_categoryes_title"
           id="demo-radio-buttons-group-label"
@@ -124,286 +119,290 @@ const BecomeAWorkerPage = () => {
           Выберите категории услуг
         </FormLabel>
         <RadioGroup
-          className="work_categoryes_radios"
           aria-labelledby="demo-radio-buttons-group-label"
           defaultValue="female"
           name="radio-buttons-group"
         >
-          <FormControlLabel
-            className="work_category_item"
-            value="Ремонт и строительство"
-            control={<Radio />}
-            label="Ремонт и строительство"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Ремонт и установка техники"
-            control={<Radio />}
-            label="Ремонт и установка техники"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Ремонт авто"
-            control={<Radio />}
-            label="Ремонт авто"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Репетиторы и обучение"
-            control={<Radio />}
-            label="Репетиторы и обучение"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Красота"
-            control={<Radio />}
-            label="Красота"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Перевозки и курьеры"
-            control={<Radio />}
-            label="Перевозки и курьеры"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Хозяйство и уборка"
-            control={<Radio />}
-            label="Хозяйство и уборка"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Компьютеры и IT"
-            control={<Radio />}
-            label="Компьютеры и IT"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Дизайнеры"
-            control={<Radio />}
-            label="Дизайнеры"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Аренда"
-            control={<Radio />}
-            label="Аренда"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Юристы"
-            control={<Radio />}
-            label="Юристы"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Тренеры"
-            control={<Radio />}
-            label="Тренеры"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Фото, видео, аудио"
-            control={<Radio />}
-            label="Фото, видео, аудио"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Творчество, рукоделие и хобби"
-            control={<Radio />}
-            label="Творчество, рукоделие и хобби"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Организация мероприятий"
-            control={<Radio />}
-            label="Организация мероприятий"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Артисты"
-            control={<Radio />}
-            label="Артисты"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Охрана и детективы"
-            control={<Radio />}
-            label="Охрана и детективы"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Услуги для животных"
-            control={<Radio />}
-            label="Услуги для животных"
-          />
-          <FormControlLabel
-            className="work_category_item"
-            value="Разное"
-            control={<Radio />}
-            label="Разное"
-          />
+          <div className="work_categories_radios">
+            <FormControlLabel
+              className="work_category_item"
+              value="Ремонт и строительство"
+              control={<Radio />}
+              label="Ремонт и строительство"
+              onClick={() => setCategory("Ремонт и строительство")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Ремонт и установка техники"
+              control={<Radio />}
+              label="Ремонт и установка техники"
+              onClick={() => setCategory("Ремонт и установка техники")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Ремонт авто"
+              control={<Radio />}
+              label="Ремонт авто"
+              onClick={() => setCategory("Ремонт авто")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Репетиторы и обучение"
+              control={<Radio />}
+              label="Репетиторы и обучение"
+              onClick={() => setCategory("Репетиторы и обучение")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Красота"
+              control={<Radio />}
+              label="Красота"
+              onClick={() => setCategory("Красота")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Перевозки и курьеры"
+              control={<Radio />}
+              label="Перевозки и курьеры"
+              onClick={() => setCategory("Перевозки и курьеры")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Хозяйство и уборка"
+              control={<Radio />}
+              label="Хозяйство и уборка"
+              onClick={() => setCategory("Хозяйство и уборка")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Компьютеры и IT"
+              control={<Radio />}
+              label="Компьютеры и IT"
+              onClick={() => setCategory("Компьютеры и IT")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Дизайнеры"
+              control={<Radio />}
+              label="Дизайнеры"
+              onClick={() => setCategory("Дизайнеры")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Аренда"
+              control={<Radio />}
+              label="Аренда"
+              onClick={() => setCategory("Аренда")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Юристы"
+              control={<Radio />}
+              label="Юристы"
+              onClick={() => setCategory("Юристы")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Тренеры"
+              control={<Radio />}
+              label="Тренеры"
+              onClick={() => setCategory("Тренеры")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Фото, видео, аудио"
+              control={<Radio />}
+              label="Фото, видео, аудио"
+              onClick={() => setCategory("Фото, видео, аудио")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Творчество, рукоделие и хобби"
+              control={<Radio />}
+              label="Творчество, рукоделие и хобби"
+              onClick={() => setCategory("Творчество, рукоделие и хобби")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Организация мероприятий"
+              control={<Radio />}
+              label="Организация мероприятий"
+              onClick={() => setCategory("Организация мероприятий")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Артисты"
+              control={<Radio />}
+              label="Артисты"
+              onClick={() => setCategory("Артисты")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Охрана и детективы"
+              control={<Radio />}
+              label="Охрана и детективы"
+              onClick={() => setCategory("Охрана и детективы")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Услуги для животных"
+              control={<Radio />}
+              label="Услуги для животных"
+              onClick={() => setCategory("Услуги для животных")}
+            />
+            <FormControlLabel
+              className="work_category_item"
+              value="Разное"
+              control={<Radio />}
+              label="Разное"
+              onClick={() => setCategory("Разное")}
+            />
+          </div>
         </RadioGroup>
       </FormControl>
       {/* ////////////////////////////////////////////////////////////////////////////// experiance  */}
-      <Box sx={{ minWidth: 120 }}>
+      <Box style={{ width: "50%", margin: "50px auto" }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Опыт Работы</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={age}
+            value={experiance}
             label="Опыт Работы"
-            onChange={handleChangeExper}
+            onChange={(handleChangeExper, (e) => setExperiance(e.target.value))}
           >
-            <MenuItem value={1}>Один год</MenuItem>
-            <MenuItem value={2}>Два года</MenuItem>
-            <MenuItem value={3}>Три года</MenuItem>
-            <MenuItem value={4}>Четыре года</MenuItem>
-            <MenuItem value={5}>Пять лет</MenuItem>
-            <MenuItem value={8}>Восемь лет</MenuItem>
-            <MenuItem value={10}>Десять лет</MenuItem>
-            <MenuItem value={15}>Пятнадцать лет</MenuItem>
-            <MenuItem value={20}>Двадцать лет</MenuItem>
-            <MenuItem value={25}>Двадцать пять лет</MenuItem>
-            <MenuItem value={30}>Тридцать лет</MenuItem>
+            <MenuItem value={"1 год"}>Один год</MenuItem>
+            <MenuItem value={"2 года"}>Два года</MenuItem>
+            <MenuItem value={"3 года"}>Три года</MenuItem>
+            <MenuItem value={"4 года"}>Четыре года</MenuItem>
+            <MenuItem value={"5 лет"}>Пять лет</MenuItem>
+            <MenuItem value={"8 лет"}>Восемь лет</MenuItem>
+            <MenuItem value={"10 лет"}>Десять лет</MenuItem>
+            <MenuItem value={"15 лет"}>Пятнадцать лет</MenuItem>
+            <MenuItem value={"20 лет"}>Двадцать лет</MenuItem>
+            <MenuItem value={"25 лет"}>Двадцать пять лет</MenuItem>
+            <MenuItem value={"30 лет"}>Тридцать лет</MenuItem>
           </Select>
         </FormControl>
       </Box>
-      {/* working days */}
-      <div>
-        <FormControl sx={{ m: 1, width: 300 }}>
-          <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
-          <Select
-            labelId="demo-multiple-chip-label"
-            id="demo-multiple-chip"
-            multiple
-            value={personName}
-            onChange={handleChangeDay}
-            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-            renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value) => (
-                  <Chip key={value} label={value} />
-                ))}
-              </Box>
-            )}
-            MenuProps={MenuProps}
-          >
-            {names.map((name) => (
-              <MenuItem
-                key={name}
-                value={name}
-                style={getStyles(name, personName, theme)}
-              >
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </div>
       {/* working hours */}
-      <Box sx={{ minWidth: 120 }}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">От</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={hour1}
-            label="Опыт Работы"
-            onChange={handleChangeHour1}
-          >
-            <MenuItem value={1}>1:00</MenuItem>
-            <MenuItem value={2}>2:00</MenuItem>
-            <MenuItem value={3}>3:00</MenuItem>
-            <MenuItem value={4}>4:00</MenuItem>
-            <MenuItem value={5}>5:00</MenuItem>
-            <MenuItem value={6}>6:00</MenuItem>
-            <MenuItem value={7}>7:00</MenuItem>
-            <MenuItem value={8}>8:00</MenuItem>
-            <MenuItem value={9}>9:00</MenuItem>
-            <MenuItem value={10}>10:00</MenuItem>
-            <MenuItem value={11}>11:00</MenuItem>
-            <MenuItem value={12}>12:00</MenuItem>
-            <MenuItem value={13}>13:00</MenuItem>
-            <MenuItem value={14}>14:00</MenuItem>
-            <MenuItem value={15}>15:00</MenuItem>
-            <MenuItem value={16}>16:00</MenuItem>
-            <MenuItem value={17}>17:00</MenuItem>
-            <MenuItem value={18}>18:00</MenuItem>
-            <MenuItem value={19}>19:00</MenuItem>
-            <MenuItem value={20}>20:00</MenuItem>
-            <MenuItem value={21}>21:00</MenuItem>
-            <MenuItem value={22}>22:00</MenuItem>
-            <MenuItem value={23}>23:00</MenuItem>
-            <MenuItem value={24}>24:00</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
-      <Box sx={{ minWidth: 120 }}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">До</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={hour2}
-            label="Опыт Работы"
-            onChange={handleChangeHour2}
-          >
-            <MenuItem value={1}>1:00</MenuItem>
-            <MenuItem value={2}>2:00</MenuItem>
-            <MenuItem value={3}>3:00</MenuItem>
-            <MenuItem value={4}>4:00</MenuItem>
-            <MenuItem value={5}>5:00</MenuItem>
-            <MenuItem value={6}>6:00</MenuItem>
-            <MenuItem value={7}>7:00</MenuItem>
-            <MenuItem value={8}>8:00</MenuItem>
-            <MenuItem value={9}>9:00</MenuItem>
-            <MenuItem value={10}>10:00</MenuItem>
-            <MenuItem value={11}>11:00</MenuItem>
-            <MenuItem value={12}>12:00</MenuItem>
-            <MenuItem value={13}>13:00</MenuItem>
-            <MenuItem value={14}>14:00</MenuItem>
-            <MenuItem value={15}>15:00</MenuItem>
-            <MenuItem value={16}>16:00</MenuItem>
-            <MenuItem value={17}>17:00</MenuItem>
-            <MenuItem value={18}>18:00</MenuItem>
-            <MenuItem value={19}>19:00</MenuItem>
-            <MenuItem value={20}>20:00</MenuItem>
-            <MenuItem value={21}>21:00</MenuItem>
-            <MenuItem value={22}>22:00</MenuItem>
-            <MenuItem value={23}>23:00</MenuItem>
-            <MenuItem value={24}>24:00</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
+      <div
+        style={{
+          width: "30%",
+          display: "flex",
+          justifyContent: "space-Around",
+          margin: "10px auto",
+        }}
+      >
+        <Box sx={{ minWidth: 120 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">От</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={hour1}
+              label="Опыт Работы"
+              onChange={(handleChangeHour1, (e) => setHour1(e.target.value))}
+            >
+              <MenuItem value="1">1:00</MenuItem>
+              <MenuItem value="2">2:00</MenuItem>
+              <MenuItem value="3">3:00</MenuItem>
+              <MenuItem value="4">4:00</MenuItem>
+              <MenuItem value="5">5:00</MenuItem>
+              <MenuItem value="6">6:00</MenuItem>
+              <MenuItem value="7">7:00</MenuItem>
+              <MenuItem value="8">8:00</MenuItem>
+              <MenuItem value="9">9:00</MenuItem>
+              <MenuItem value="10">10:00</MenuItem>
+              <MenuItem value="11">11:00</MenuItem>
+              <MenuItem value="12">12:00</MenuItem>
+              <MenuItem value="13">13:00</MenuItem>
+              <MenuItem value="14">14:00</MenuItem>
+              <MenuItem value="15">15:00</MenuItem>
+              <MenuItem value="16">16:00</MenuItem>
+              <MenuItem value="17">17:00</MenuItem>
+              <MenuItem value="18">18:00</MenuItem>
+              <MenuItem value="19">19:00</MenuItem>
+              <MenuItem value="20">20:00</MenuItem>
+              <MenuItem value="21">21:00</MenuItem>
+              <MenuItem value="22">22:00</MenuItem>
+              <MenuItem value="23">23:00</MenuItem>
+              <MenuItem value="24">24:00</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <Box sx={{ minWidth: 120 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">До</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={hour2}
+              label="Опыт Работы"
+              onChange={(handleChangeHour2, (e) => setHour2(e.target.value))}
+            >
+              <MenuItem value="1">1:00</MenuItem>
+              <MenuItem value="2">2:00</MenuItem>
+              <MenuItem value="3">3:00</MenuItem>
+              <MenuItem value="4">4:00</MenuItem>
+              <MenuItem value="5">5:00</MenuItem>
+              <MenuItem value="6">6:00</MenuItem>
+              <MenuItem value="7">7:00</MenuItem>
+              <MenuItem value="8">8:00</MenuItem>
+              <MenuItem value="9">9:00</MenuItem>
+              <MenuItem value="10">10:00</MenuItem>
+              <MenuItem value="11">11:00</MenuItem>
+              <MenuItem value="12">12:00</MenuItem>
+              <MenuItem value="13">13:00</MenuItem>
+              <MenuItem value="14">14:00</MenuItem>
+              <MenuItem value="15">15:00</MenuItem>
+              <MenuItem value="16">16:00</MenuItem>
+              <MenuItem value="17">17:00</MenuItem>
+              <MenuItem value="18">18:00</MenuItem>
+              <MenuItem value="19">19:00</MenuItem>
+              <MenuItem value="20">20:00</MenuItem>
+              <MenuItem value="21">21:00</MenuItem>
+              <MenuItem value="22">22:00</MenuItem>
+              <MenuItem value="23">23:00</MenuItem>
+              <MenuItem value="24">24:00</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      </div>
 
       {/* description */}
-      <TextField
-        id="outlined-multiline-static"
-        label="Описание"
-        multiline
-        rows={10}
-      />
+      <div className="description">
+        <TextField
+          style={{
+            width: "100%",
+            margin: "50px auto",
+          }}
+          id="outlined-multiline-static"
+          label="Описание"
+          multiline
+          value={desc}
+          rows={10}
+          onChange={(e) => setDesc(e.target.value)}
+        />
+      </div>
 
       {/* price */}
-      <TextField
-        label="Цена"
-        id="outlined-start-adornment"
-        sx={{ m: 1, width: "25ch" }}
-        InputProps={{
-          endAdornment: <InputAdornment position="end">сом</InputAdornment>,
-        }}
-      />
-      {/* image */}
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => setImage(e.target.files[0])}
-      />
-      <button className="custom-btn btn-4" onClick={handleSave}>
-        <span>Сохранить</span>
-      </button>
+      <div className="price">
+        <TextField
+          label="Цена"
+          id="outlined-start-adornment"
+          sx={{ m: 1, width: "25ch" }}
+          onChange={(e) => setPrice(e.target.value)}
+          InputProps={{
+            endAdornment: <InputAdornment position="end">сом</InputAdornment>,
+          }}
+        />
+      </div>
+      <div className="button">
+        <button className="custom-btn btn-4 " onClick={handleSave}>
+          <span>Сохранить</span>
+        </button>
+      </div>
     </>
   );
 };
