@@ -16,7 +16,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 
 // custom imports
 import { useNavigate } from "react-router-dom";
-import { useWorkCreate } from "../contexts/WorkCreateContext";
+import { useWorkCreate } from "../contexts/workCreateContext";
 import "../styles/becomeAWorker.css";
 
 const ITEM_HEIGHT = 48;
@@ -36,7 +36,7 @@ const BecomeAWorkerPage = () => {
   // const [name, setName] = useState("");
   const name = "Kuban Kadyraliev";
   // category
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(0);
   // for experiance
   const [experiance, setExperiance] = useState("");
 
@@ -59,7 +59,7 @@ const BecomeAWorkerPage = () => {
   const [desc, setDesc] = useState("");
 
   //   for price
-  const [price, setPrice] = React.useState("");
+  const [price, setPrice] = React.useState(0);
 
   // custom
   function handleSave() {
@@ -75,14 +75,23 @@ const BecomeAWorkerPage = () => {
     // ) {
     //   alert("Где-то не заполнено");
     // } else {
-    console.log("HELLO");
-    let formData = new FormData();
-    formData.append("category", category);
-    formData.append("experiance", experiance);
-    formData.append("hour_from", hour1);
-    formData.append("hour_to", hour2);
-    formData.append("desc", desc);
-    formData.append("price", price);
+    // console.log("HELLO");
+    // let formData = new FormData();
+    // formData.append("experiance", experiance);
+    // formData.append("hour_from", hour1);
+    // formData.append("hour_to", hour2);
+    // formData.append("desc", desc);
+    // formData.append("price", price);
+    // formData.append("category", category);
+    // console.log(formData);
+    let formData = {
+      experience: experiance,
+      hour_from: hour1,
+      hour_to: hour2,
+      desc: desc,
+      price: price,
+      category: category,
+    };
     handleSaveWork(formData, navigate);
 
     setCategory("");
@@ -96,14 +105,14 @@ const BecomeAWorkerPage = () => {
 
   const handleConsole = () => {
     // console.log("name_LastName", name);
-    console.log("category", category);
+    console.log("Category", category);
     console.log("experiance", experiance);
     console.log("hour_from", hour1);
     console.log("hour_to", hour2);
     console.log("description", desc);
     console.log("price", price);
   };
-
+  console.log(typeof category);
   return (
     <>
       <FormControl
@@ -129,133 +138,133 @@ const BecomeAWorkerPage = () => {
               value="Ремонт и строительство"
               control={<Radio />}
               label="Ремонт и строительство"
-              onClick={() => setCategory("Ремонт и строительство")}
+              onClick={() => setCategory(2)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Ремонт и установка техники"
               control={<Radio />}
               label="Ремонт и установка техники"
-              onClick={() => setCategory("Ремонт и установка техники")}
+              onClick={() => setCategory(3)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Ремонт авто"
               control={<Radio />}
               label="Ремонт авто"
-              onClick={() => setCategory("Ремонт авто")}
+              onClick={() => setCategory(4)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Репетиторы и обучение"
               control={<Radio />}
               label="Репетиторы и обучение"
-              onClick={() => setCategory("Репетиторы и обучение")}
+              onClick={() => setCategory(5)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Красота"
               control={<Radio />}
               label="Красота"
-              onClick={() => setCategory("Красота")}
+              onClick={() => setCategory(6)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Перевозки и курьеры"
               control={<Radio />}
               label="Перевозки и курьеры"
-              onClick={() => setCategory("Перевозки и курьеры")}
+              onClick={() => setCategory(7)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Хозяйство и уборка"
               control={<Radio />}
               label="Хозяйство и уборка"
-              onClick={() => setCategory("Хозяйство и уборка")}
+              onClick={() => setCategory(8)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Компьютеры и IT"
               control={<Radio />}
               label="Компьютеры и IT"
-              onClick={() => setCategory("Компьютеры и IT")}
+              onClick={() => setCategory(9)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Дизайнеры"
               control={<Radio />}
               label="Дизайнеры"
-              onClick={() => setCategory("Дизайнеры")}
+              onClick={() => setCategory(10)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Аренда"
               control={<Radio />}
               label="Аренда"
-              onClick={() => setCategory("Аренда")}
+              onClick={() => setCategory(11)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Юристы"
               control={<Radio />}
               label="Юристы"
-              onClick={() => setCategory("Юристы")}
+              onClick={() => setCategory(12)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Тренеры"
               control={<Radio />}
               label="Тренеры"
-              onClick={() => setCategory("Тренеры")}
+              onClick={() => setCategory(13)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Фото, видео, аудио"
               control={<Radio />}
               label="Фото, видео, аудио"
-              onClick={() => setCategory("Фото, видео, аудио")}
+              onClick={() => setCategory(14)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Творчество, рукоделие и хобби"
               control={<Radio />}
               label="Творчество, рукоделие и хобби"
-              onClick={() => setCategory("Творчество, рукоделие и хобби")}
+              onClick={() => setCategory(15)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Организация мероприятий"
               control={<Radio />}
               label="Организация мероприятий"
-              onClick={() => setCategory("Организация мероприятий")}
+              onClick={() => setCategory(16)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Артисты"
               control={<Radio />}
               label="Артисты"
-              onClick={() => setCategory("Артисты")}
+              onClick={() => setCategory(17)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Охрана и детективы"
               control={<Radio />}
               label="Охрана и детективы"
-              onClick={() => setCategory("Охрана и детективы")}
+              onClick={() => setCategory(18)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Услуги для животных"
               control={<Radio />}
               label="Услуги для животных"
-              onClick={() => setCategory("Услуги для животных")}
+              onClick={() => setCategory(19)}
             />
             <FormControlLabel
               className="work_category_item"
               value="Разное"
               control={<Radio />}
               label="Разное"
-              onClick={() => setCategory("Разное")}
+              onClick={() => setCategory(20)}
             />
           </div>
         </RadioGroup>

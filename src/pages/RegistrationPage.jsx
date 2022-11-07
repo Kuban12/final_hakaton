@@ -133,6 +133,7 @@ const RegistrationPage = () => {
           <h2 className="register_form_title">Sign Up</h2>
 
           <TextField
+            className="loginInputs"
             sx={{ marginBottom: "10px", width: "50%" }}
             id="outlined-textarea"
             label="Имя"
@@ -142,6 +143,7 @@ const RegistrationPage = () => {
             onChange={(e) => setName(e.target.value)}
           />
           <TextField
+            className="loginInputs"
             sx={{ marginBottom: "6px", width: "50%" }}
             id="outlined-textarea"
             label="Фамилие"
@@ -152,6 +154,7 @@ const RegistrationPage = () => {
           />
 
           <TextField
+            className="loginInputs"
             sx={{ marginBottom: "10px", width: "50%" }}
             id="outlined-textarea"
             label="Почта"
@@ -161,6 +164,7 @@ const RegistrationPage = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
+            className="loginInputs"
             sx={{ marginBottom: "10px", width: "50%" }}
             id="outlined-textarea"
             label="Номер"
@@ -170,7 +174,11 @@ const RegistrationPage = () => {
             onChange={(e) => setPhone(e.target.value)}
           />
 
-          <FormControl sx={{ m: 1, width: "50%" }} variant="outlined">
+          <FormControl
+            className="loginInputs"
+            sx={{ m: 1, width: "50%" }}
+            variant="outlined"
+          >
             <InputLabel htmlFor="outlined-adornment-password">
               Пароль
             </InputLabel>
@@ -194,7 +202,11 @@ const RegistrationPage = () => {
               label="Password"
             />
           </FormControl>
-          <FormControl sx={{ m: 1, width: "50%" }} variant="outlined">
+          <FormControl
+            className="loginInputs"
+            sx={{ m: 1, width: "50%" }}
+            variant="outlined"
+          >
             <InputLabel htmlFor="outlined-adornment-password">
               Подтверждение
             </InputLabel>

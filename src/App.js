@@ -2,18 +2,19 @@ import React from "react";
 import MainRoutes from "./MainRoutes";
 import { BrowserRouter } from "react-router-dom";
 import AuthContext from "./contexts/AuthContext";
-import WorkCreateContext from "./contexts/WorkCreateContext";
+import workCreateContext from "./contexts/workCreateContext";
+import WorkCreateContextProvider from "./contexts/workCreateContext";
 
 function App() {
   return (
     <>
-      <WorkCreateContext>
+      <WorkCreateContextProvider>
         <AuthContext>
           <BrowserRouter>
             <MainRoutes />
           </BrowserRouter>
         </AuthContext>
-      </WorkCreateContext>
+      </WorkCreateContextProvider>
     </>
   );
 }

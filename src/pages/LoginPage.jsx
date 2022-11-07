@@ -59,6 +59,7 @@ const LoginPage = () => {
           <h2 className="register_form_title">Sign In</h2>
 
           <TextField
+            className="loginInputs"
             sx={{ marginBottom: "10px", width: "50%" }}
             id="outlined-textarea"
             label="Email"
@@ -68,7 +69,11 @@ const LoginPage = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <FormControl sx={{ m: 1, width: "50%" }} variant="outlined">
+          <FormControl
+            className="loginInputs"
+            sx={{ m: 1, width: "50%" }}
+            variant="outlined"
+          >
             <InputLabel htmlFor="outlined-adornment-password">
               Password
             </InputLabel>
