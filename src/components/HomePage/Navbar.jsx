@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,6 +12,7 @@ import Tooltip from "@mui/material/Tooltip";
 import AdbIcon from "@mui/icons-material/Adb";
 import { ThemeProvider, createTheme } from "@mui/material";
 import "../../styles/homePage.css";
+import { useAuth } from "../../contexts/AuthContext";
 import icon from "./icons/navbarIcon.svg";
 import { useNavigate } from "react-router-dom";
 
@@ -27,8 +28,9 @@ const themeNav = createTheme({
 const settings = ["Войти"];
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { currentUser, handleLogout } = useAuth();
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -47,7 +49,6 @@ function ResponsiveAppBar() {
   // custom
 
   const navigate = useNavigate();
-
   return (
     <ThemeProvider theme={themeNav}>
       <AppBar position="static">
@@ -67,7 +68,6 @@ function ResponsiveAppBar() {
             >
               LOGO
             </div>
-
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -134,26 +134,6 @@ function ResponsiveAppBar() {
             >
               {/* /////////////////////////////////////////////// */}
               <Button
-                key="Создать заказ"
-                onClick={handleCloseNavMenu}
-                style={{
-                  my: 2,
-                  color: "#7b92a4",
-                  fontSize: "10px",
-                  textDecoration: "none",
-                  fontFamily: "monospace",
-                  border: "none",
-                  backgroundColor: "white",
-                  fontWeight: 700,
-                  lineHeight: "20px",
-                  textDecoration: "none",
-                  marginLeft: "20px",
-                  display: "block",
-                }}
-              >
-                Создать заказ
-              </Button>
-              <Button
                 key="Найти специалиста"
                 onClick={(handleCloseNavMenu, () => navigate("/catalog"))}
                 style={{
@@ -173,26 +153,7 @@ function ResponsiveAppBar() {
               >
                 Найти специалиста
               </Button>
-              <Button
-                key="Мои заказы"
-                onClick={handleCloseNavMenu}
-                style={{
-                  my: 2,
-                  color: "#7b92a4",
-                  fontSize: "10px",
-                  textDecoration: "none",
-                  fontFamily: "monospace",
-                  border: "none",
-                  backgroundColor: "white",
-                  fontWeight: 700,
-                  lineHeight: "20px",
-                  textDecoration: "none",
-                  marginLeft: "20px",
-                  display: "block",
-                }}
-              >
-                Мои заказы
-              </Button>
+
               <Button
                 key="Стать исполнителем"
                 onClick={(handleCloseNavMenu, () => navigate("/becomeAWorker"))}
@@ -215,9 +176,8 @@ function ResponsiveAppBar() {
               </Button>
             </Box>
 
-            <Box sx={{ flexGrow: 0 }}>
-              <img src={icon} alt="" style={{ width: "10px" }} />
-              <Tooltip title="Open settings">
+            {currentUser ? (
+              <Box sx={{ flexGrow: 0 }}>
                 <Button
                   sx={{
                     color: "#7b92a4",
@@ -225,13 +185,31 @@ function ResponsiveAppBar() {
                     fontFamily: "monospace",
                     fontWeight: 700,
                   }}
-                  onClick={() => navigate("/login")}
+                  onClick={handleLogout}
                 >
                   {" "}
-                  Войти{" "}
+                  Выйти{" "}
                 </Button>
-              </Tooltip>
-            </Box>
+              </Box>
+            ) : (
+              <Box sx={{ flexGrow: 0 }}>
+                <img src={icon} alt="" style={{ width: "10px" }} />
+                <Tooltip title="Open settings">
+                  <Button
+                    sx={{
+                      color: "#7b92a4",
+                      fontSize: "10px",
+                      fontFamily: "monospace",
+                      fontWeight: 700,
+                    }}
+                    onClick={() => navigate("/login")}
+                  >
+                    {" "}
+                    Войти{" "}
+                  </Button>
+                </Tooltip>
+              </Box>
+            )}
           </Toolbar>
         </Container>
       </AppBar>

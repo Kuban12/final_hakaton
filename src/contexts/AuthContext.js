@@ -66,11 +66,10 @@ const AuthContextProvider = ({ children }) => {
   //   }
   //  }
 
-  function handleLogout(navigate) {
+  function handleLogout() {
     localStorage.removeItem("tokens");
     localStorage.removeItem("email");
     setCurrentUser(false);
-    navigate("/");
   }
 
   return (
