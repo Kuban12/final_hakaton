@@ -4,7 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
-import BecomeAWorkerPage from "./pages/BecomeAWorkerPage";
+import BecomeAWorkerPage from "./pages/BecomeAworkerPage";
 import CatalogPage from "./pages/CatalogPage";
 
 const MainRoutes = () => {

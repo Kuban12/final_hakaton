@@ -1,36 +1,44 @@
 import React, { useState, useContext, useReducer } from "react";
 import axios from "axios";
-import { Location, Navigate } from "../components/Category/FilterCategory";
-// import { useNavigate, useLocation } from "react-router-dom";
+// import { Location, Navigate } from "../components/Category/FilterCategory";
+import { Api } from "@mui/icons-material";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const workCreateContext = React.createContext();
 export const useWorkCreate = () => useContext(workCreateContext);
 
 const INIT_STATE = {
-  category: [],
+  categoryArray: [],
   pages: 0,
+  humans: [],
 };
 
 function reducer(state = INIT_STATE, action) {
+  console.log(action);
   switch (action.type) {
+    case "GET_HUMANS":
+      return { ...state, humans: action.payload.results };
     case "GET_CATEGORIES":
       return {
         ...state,
-        category: action.payload,
-        pages: Math.ceil(action.payload.count / 6),
+        categoryArray: action.payload.results,
+        // pages: Math.ceil(action.payload.count / 6),
       };
 
     default:
       return state;
   }
 }
-
-const API = "http://34.67.85.209/api/v1";
-
+const API_HUMANS = "http://34.67.85.209/api/v1/service/";
+const API = "http://34.67.85.209/api/v1/";
 const WorkCreateContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
-  const navigate = Navigate;
-  const location = Location;
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // console.log(window.location.pathname);
+  // let [categoryArray, setCategoryArray] = useState([]);
+  let [mainArray, setMainArray] = useState([]);
 
   const [error1, setError1] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -45,7 +53,7 @@ const WorkCreateContextProvider = ({ children }) => {
           // ContentType: "multipart/form-data",
         },
       };
-      const res = await axios.post(`${API}/service/`, formData, config);
+      const res = await axios.post(`${API}service/`, formData, config);
       console.log(formData);
       // console.log(res.data);
       navigate("/login");
@@ -62,11 +70,12 @@ const WorkCreateContextProvider = ({ children }) => {
     if (value === "all") {
       search.delete(query);
     } else {
-      search.set(query, value);
+      console.log(value, "VLAUE", query, "QUERT");
+      search.set(value, "category");
     }
 
     const url = `${location.pathname}?${search.toString()}`;
-
+    console.log(search.toString());
     navigate(url);
   };
 
@@ -79,16 +88,26 @@ const WorkCreateContextProvider = ({ children }) => {
           Authorization,
         },
       };
-      const res = await axios(`${API}/service/`, config);
-      console.log(res.data.results);
+      const res = await axios(`${API}categories/`, config);
+      console.log(res.data);
       dispatch({
         type: "GET_CATEGORIES",
-        payload: res.data.results,
+        payload: res.data,
       });
+      // setCategoryArray(res.data.results);
     } catch (err) {
       console.log(err);
     }
   }
+  async function getHumans() {
+    let res = await axios(`${API_HUMANS}${window.location.search}`);
+    dispatch({
+      type: "GET_HUMANS",
+      payload: res.data,
+    });
+  }
+
+  console.log(state.categoryArray);
 
   // async function FilterCategory() {
   //   let array = await axios(`${API}/service/`).data.results;
@@ -116,19 +135,31 @@ const WorkCreateContextProvider = ({ children }) => {
   //   }
   // }
 
+  // function filterCategory(filterArray) {
+  //   let arr = [];
+  //   categoryArray.map((item) => {
+  //     if (item.category == filterArray) {
+  //       arr.push(item);
+  //     }
+  //   });
+  //   console.log(arr);
+  //   return arr;
+  // }
   return (
     <workCreateContext.Provider
       value={{
         handleSaveWork,
         getCategories,
+        getHumans,
+        humans: state.humans,
+        // filterCategory,
         // getOneHuman,
-        category: state.category,
+        // category: state.category,
         pages: state.pages,
-
         fetchByParams,
-
         error1,
         loading,
+        categoryArray: state.categoryArray,
       }}
     >
       {children}
