@@ -5,11 +5,7 @@ import "../../styles/card.css";
 const HumanCard = ({ item }) => {
   return (
     <div>
-      <div
-        //     style={{backgroundImage: {item.image};
-        // background-repeat: no-repeat;}}
-        className="blog-card spring-fever"
-      >
+      <div className="blog-card spring-fever">
         <div className="title-content">
           <h3>SPRING FEVER</h3>
           <hr />

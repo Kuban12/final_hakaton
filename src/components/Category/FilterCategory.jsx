@@ -4,16 +4,14 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-// import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import "../../styles/catalogPage.css";
 
 import { useWorkCreate } from "../../contexts/WorkCreateContext";
 import { NavItem } from "react-bootstrap";
-// export const Navigate = () => useNavigate();
-// export const Location = () => useLocation();
 
 const FilterCategory = () => {
   const { fetchByParams } = useWorkCreate();
+  const { category, setCategory } = useWorkCreate();
   return (
     <>
       <Navbar />
@@ -34,9 +32,15 @@ const FilterCategory = () => {
             //   fetchByParams("type", e.target.value);
             // }}
             onChange={(e) => {
-              fetchByParams("category", e.target.value);
+              setCategory(e.target.value);
             }}
           >
+            <FormControlLabel
+              className="sidenav_btn"
+              value=""
+              control={<Radio />}
+              label="Все услуги"
+            />
             <FormControlLabel
               className="sidenav_btn"
               value="2"
