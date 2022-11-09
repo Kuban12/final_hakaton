@@ -16,7 +16,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const res = await axios.post(`${API}/accounts/register/`, formData);
       console.log(res);
-      alert("Мы отправили уведомление на почту. Подтвердите аккунт");
+      alert("Мы отправили уведомление на почту. Подтвердите аккaунт");
       navigate("/login");
     } catch (err) {
       console.log("ERROR", err);
@@ -72,6 +72,34 @@ const AuthContextProvider = ({ children }) => {
     setCurrentUser(false);
   }
 
+  async function forgotPassword(formData, navigate) {
+    try {
+      console.log("jessica");
+      const res = await axios.post(`${API}/accounts/forgot/`, formData);
+      navigate("/forgotPassConfirm");
+
+      console.log(res);
+    } catch (err) {
+      console.log(err.response.data.detail);
+      setError([err.response.data.detail]);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function forgotPassConfirm(formData, navigate) {
+    try {
+      const res = await axios.post(`${API}/accounts/restore/`, formData);
+      navigate("/login");
+      console.log(res);
+    } catch (err) {
+      console.log(err.response.data.detail);
+      setError([err.response.data.detail]);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <authContext.Provider
       value={{
@@ -83,6 +111,8 @@ const AuthContextProvider = ({ children }) => {
         handleRegister,
         handleLogin,
         handleLogout,
+        forgotPassword,
+        forgotPassConfirm,
       }}
     >
       {children}

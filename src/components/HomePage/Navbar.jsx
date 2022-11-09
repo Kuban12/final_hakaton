@@ -153,7 +153,6 @@ function ResponsiveAppBar() {
               >
                 Найти специалиста
               </Button>
-
               <Button
                 key="Стать исполнителем"
                 onClick={(handleCloseNavMenu, () => navigate("/becomeAWorker"))}
