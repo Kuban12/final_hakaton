@@ -33,8 +33,6 @@ const AuthContextProvider = ({ children }) => {
       const res = await axios.post(`${API}/accounts/login/`, formData);
       localStorage.setItem("tokens", JSON.stringify(res.data));
       localStorage.setItem("email", email);
-
-      // localStorage.setItem("user_state", executor);
       setCurrentUser(email);
       navigate("/");
       console.log(res);
@@ -46,30 +44,38 @@ const AuthContextProvider = ({ children }) => {
     }
   }
 
-  // const login = async (username, password) => {
-  //   let formData = new FormData()
-  //   formData.append('username', username)
-  //   formData.append('password', password)
-
-  //   try {
-  //    const res = await axios.post(`${API}accounts/login/`, formData, config)
-
-  //    localStorage.setItem('token', JSON.stringify(res.data))
-  //    navigate('/')
-  //    console.log(res.data)
-
-  //    localStorage.setItem('username', JSON.stringify(username))
-  //    setUser(username)
-  //    navigate('/login')
-  //   } catch (err) {
-  //    setError('WRONG USERNAME OR PASSWORD', err)
-  //   }
-  //  }
-
   function handleLogout() {
     localStorage.removeItem("tokens");
     localStorage.removeItem("email");
     setCurrentUser(false);
+  }
+
+  async function forgotPassword(formData, navigate) {
+    try {
+      console.log("jessica");
+      const res = await axios.post(`${API}/accounts/forgot/`, formData);
+      navigate("/forgotPassConfirm");
+
+      console.log(res);
+    } catch (err) {
+      console.log(err.response.data.detail);
+      setError([err.response.data.detail]);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function forgotPassConfirm(formData, navigate) {
+    try {
+      const res = await axios.post(`${API}/accounts/restore/`, formData);
+      navigate("/login");
+      console.log(res);
+    } catch (err) {
+      console.log(err.response.data.detail);
+      setError([err.response.data.detail]);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -78,7 +84,8 @@ const AuthContextProvider = ({ children }) => {
         currentUser,
         error,
         loading,
-
+        forgotPassConfirm,
+        forgotPassword,
         setError,
         handleRegister,
         handleLogin,

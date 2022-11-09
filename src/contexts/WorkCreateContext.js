@@ -89,7 +89,6 @@ const WorkCreateContextProvider = ({ children }) => {
   async function getMainArray() {
     let res = await axios(`${API_HUMANS}${window.location.search}`);
     setMainArray(res.data.results);
-    console.log(mainArray);
   }
   // ==================================
 
@@ -100,6 +99,8 @@ const WorkCreateContextProvider = ({ children }) => {
   return (
     <workCreateContext.Provider
       value={{
+        API_HUMANS,
+        API,
         handleSaveWork,
         getCategories,
         mainArray,

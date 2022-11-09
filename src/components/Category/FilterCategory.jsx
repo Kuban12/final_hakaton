@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../components/HomePage/Navbar";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -14,7 +13,6 @@ const FilterCategory = () => {
   const { category, setCategory } = useWorkCreate();
   return (
     <>
-      <Navbar />
       <div className="sidenav">
         <FormControl>
           {/* <FormLabel

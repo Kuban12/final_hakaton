@@ -5,49 +5,31 @@ import { useSearchParams } from "react-router-dom";
 import FilterCategory from "./FilterCategory";
 import { Pagination } from "@mui/material";
 import "../../styles/category.css";
+import PaginationCard from "./Pagination";
+import axios from "axios";
 
 const CategoryList = () => {
-  const {
-    mainArray,
-    getCategories,
-    categoryArray,
-    fetchByParams,
-    getHumans,
-    humans,
-    category,
-    getMainArray,
-  } = useWorkCreate();
-  console.log(categoryArray);
+  const { mainArray, categoryArray, humans, category, getMainArray, API } =
+    useWorkCreate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState(searchParams.get("q") || "");
-  // useEffect(() => {
-  //   categoryArray(filterCategory);
-  // }, [filterCategory]);
   useEffect(() => {
     getMainArray();
   }, []);
-
-  // useEffect(() => {
-  //   getHumans();
-  // }, [searchParams]);
-  //pagination
-
   const [page, setPage] = useState(1);
   const itemsOnPage = 6;
-
-  // const count = Math.ceil(categoryArray.length / itemsOnPage);
-  // const { fetchByParams, categoryArray } = useWorkCreate();
-  // const handlePage = (e, p) => {
-  //   setPage(p);
-  // };
-
   function currentData() {
     const begin = (page - 1) * itemsOnPage;
     const end = begin + itemsOnPage;
     return humans.slice(begin, end);
   }
-  console.log(mainArray);
-
+  async function counterPage() {
+    let res = await axios(API);
+    console.log(res.data.results.length / 6);
+    console.log(res.data.results);
+    return Math.ceil(res.data.results.length / 6);
+  }
+  counterPage();
   return (
     <>
       <div>
@@ -59,7 +41,6 @@ const CategoryList = () => {
                 mainArray.map((item) => {
                   if (item.category == category) {
                     return <HumanCard key={item.id} item={item} />;
-                    console.log(item.category);
                   }
                 })
               ) : (
@@ -79,7 +60,7 @@ const CategoryList = () => {
         </div>
         <br />
         <br />
-        {/* <Pagination count={count} page={page} onChange={handlePage} /> */}
+        <PaginationCard />
       </div>
     </>
   );

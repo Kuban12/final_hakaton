@@ -7,9 +7,9 @@ const HumanCard = ({ item }) => {
     <div>
       <div className="blog-card spring-fever">
         <div className="title-content">
-          <h3>SPRING FEVER</h3>
+          <h3>{item.name}</h3>
           <hr />
-          <div className="intro">КАТЕГОРИЯ: {item.category}</div>
+          {/* <div className="intro">КАТЕГОРИЯ: {item.category}</div> */}
           <div className="intro">ОПЫТ: {item.experience}</div>
         </div>
         <div className="card-info">{item.desc}</div>
