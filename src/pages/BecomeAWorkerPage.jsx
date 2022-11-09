@@ -16,7 +16,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 
 // custom imports
 import { useNavigate } from "react-router-dom";
-import { useWorkCreate } from "../contexts/workCreateContext";
+import { useWorkCreate } from "../contexts/WorkCreateContext";
 import "../styles/becomeAWorker.css";
 
 const ITEM_HEIGHT = 48;

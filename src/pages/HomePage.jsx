@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../components/HomePage/Navbar";
 import Search from "../components/HomePage/Search";
 import Categories from "../components/HomePage/Categories";
 import AnimatedSec from "../components/HomePage/Categories";
@@ -12,14 +11,12 @@ import Footer from "../components/HomePage/Footer";
 const HomePage = () => {
   return (
     <>
-      <Navbar />
       <Search />
       <Categories />
       <Location />
       <Slides />
       <SocialMedia />
       <Catalog />
-      <Footer />
     </>
   );
 };

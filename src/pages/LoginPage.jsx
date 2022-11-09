@@ -97,9 +97,7 @@ const LoginPage = () => {
               label="Password"
             />
           </FormControl>
-
           <span onClick={() => navigate("/forgotPass")}>Забыл пароль</span>
-
           <button className="custom-btn btn-4" onClick={handleAuth}>
             <span>Войти</span>
           </button>

@@ -11,6 +11,17 @@ body {
 
 /* SEARCH */
 /*  */
+/* .navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100px;
+} */
+/* .css-19r6kue-MuiContainer-root {
+  background-color: black 0;
+  opacity: 10 !important;
+} */
 
 .search_section_main {
   background-image: url(../components/HomePage/images/HomePage_Search_section_2.webp);
@@ -232,7 +243,6 @@ body {
   font-size: medium;
   outline: none;
   border: none;
-  ;
   display: inline-block;
   background: #ff7f24;
   color: #fff;

@@ -1,23 +1,18 @@
-import React from "react";
-import Navbar from "../../components/HomePage/Navbar";
+import React, { useEffect, useState } from "react";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import "../../styles/catalogPage.css";
 
-import { useWorkCreate } from "../../contexts/workCreateContext";
-export const Navigate = () => useNavigate();
-export const Location = () => useLocation();
+import { useWorkCreate } from "../../contexts/WorkCreateContext";
+import { NavItem } from "react-bootstrap";
 
 const FilterCategory = () => {
   const { fetchByParams } = useWorkCreate();
-
+  const { category, setCategory } = useWorkCreate();
   return (
     <>
-      <Navbar />
       <div className="sidenav">
         <FormControl>
           {/* <FormLabel
@@ -31,99 +26,132 @@ const FilterCategory = () => {
             name="controlled-radio-buttons-group"
             //custom
             defaultValue="all"
+            // onChange={(e) => {
+            //   fetchByParams("type", e.target.value);
+            // }}
             onChange={(e) => {
-              fetchByParams("type", e.target.value);
+              setCategory(e.target.value);
             }}
           >
             <FormControlLabel
               className="sidenav_btn"
-              value="all"
+              value=""
               control={<Radio />}
-              label="Все категории"
+              label="Все услуги"
             />
             <FormControlLabel
               className="sidenav_btn"
-              value="makarons"
+              value="2"
               control={<Radio />}
               label="Ремонт и строительство"
             />
             <FormControlLabel
               className="sidenav_btn"
-              value="eclairs"
+              value="3"
               control={<Radio />}
               label="Ремонт и установка техники"
             />
             <FormControlLabel
               className="sidenav_btn"
-              value="giftbaskets"
+              value="4"
               control={<Radio />}
               label="Ремонт авто"
             />
             <FormControlLabel
               className="sidenav_btn"
-              value="caramel"
+              value="6"
               control={<Radio />}
               label="Красота"
             />
             <FormControlLabel
               className="sidenav_btn"
-              value="waffles"
+              value="7"
               control={<Radio />}
               label="Перевозки и курьеры"
             />
             <FormControlLabel
               className="sidenav_btn"
-              value="chokpotato"
+              value="8"
               control={<Radio />}
               label="Хозяйство и уборка"
             />
             <FormControlLabel
               className="sidenav_btn"
-              value="chokpotato"
+              value="9"
               control={<Radio />}
               label="Компьютеры и IT"
             />
             <FormControlLabel
               className="sidenav_btn"
-              value="chokpotato"
+              value="10"
               control={<Radio />}
               label="Дизайнеры"
             />
             <FormControlLabel
               className="sidenav_btn"
-              value="chokpotato"
+              value="11"
               control={<Radio />}
               label="Аренда"
             />
             <FormControlLabel
               className="sidenav_btn"
-              value="chokpotato"
+              value="12"
               control={<Radio />}
               label="Юристы"
             />
             <FormControlLabel
               className="sidenav_btn"
-              value="chokpotato"
+              value="14"
               control={<Radio />}
               label="Фото, видео, аудио"
             />
             <FormControlLabel
               className="sidenav_btn"
-              value="chokpotato"
+              value="15"
               control={<Radio />}
               label="Творчество, рукоделие и хобби"
             />
             <FormControlLabel
               className="sidenav_btn"
-              value="chokpotato"
+              value="16"
               control={<Radio />}
               label="Организация мероприятий"
             />
             <FormControlLabel
               className="sidenav_btn"
-              value="chokpotato"
+              value="17"
               control={<Radio />}
               label="Артисты"
+            />
+            <FormControlLabel
+              className="sidenav_btn"
+              value="18"
+              control={<Radio />}
+              label="Охрана и детективы"
+            />
+            <FormControlLabel
+              className="sidenav_btn"
+              value="19"
+              control={<Radio />}
+              label="Услуги для животных"
+            />
+            <FormControlLabel
+              className="sidenav_btn"
+              value="20"
+              control={<Radio />}
+              label="Разное"
+            />
+            <FormControlLabel
+              className="sidenav_btn"
+              value="5"
+              control={<Radio />}
+              label="Репетиторы и обучение"
+            />
+            <FormControlLabel
+              className="sidenav_btn"
+              value="13"
+              control={<Radio />}
+              label="Тренеры"
             />
           </RadioGroup>
         </FormControl>

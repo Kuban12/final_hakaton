@@ -1,36 +1,36 @@
-import React, { useState, useContext, useReducer } from "react";
+import React, { useState, useContext, useReducer, useEffect } from "react";
 import axios from "axios";
-import { Location, Navigate } from "../components/Category/FilterCategory";
-// import { useNavigate, useLocation } from "react-router-dom";
-
+import { Api } from "@mui/icons-material";
+import { useNavigate, useLocation } from "react-router-dom";
 export const workCreateContext = React.createContext();
 export const useWorkCreate = () => useContext(workCreateContext);
 
 const INIT_STATE = {
-  category: [],
   pages: 0,
+  humans: [],
 };
 
 function reducer(state = INIT_STATE, action) {
   switch (action.type) {
+    case "GET_HUMANS":
+      return { ...state, humans: action.payload.results };
     case "GET_CATEGORIES":
       return {
         ...state,
-        category: action.payload,
-        pages: Math.ceil(action.payload.count / 6),
+        categoryArray: action.payload.results,
       };
 
     default:
       return state;
   }
 }
-
-const API = "http://34.67.85.209/api/v1";
-
+const API_HUMANS = "http://34.67.85.209/api/v1/service/";
+const API = "http://34.67.85.209/api/v1/";
 const WorkCreateContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
-  const navigate = Navigate;
-  const location = Location;
+  const navigate = useNavigate();
+  const location = useLocation();
+  let [mainArray, setMainArray] = useState([]);
 
   const [error1, setError1] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -42,16 +42,13 @@ const WorkCreateContextProvider = ({ children }) => {
       const config = {
         headers: {
           Authorization,
-          // ContentType: "multipart/form-data",
         },
       };
-      const res = await axios.post(`${API}/service/`, formData, config);
-      console.log(formData);
+      const res = await axios.post(`${API}service/`, formData, config);
       // console.log(res.data);
       navigate("/login");
     } catch (err) {
       console.log("ERROR", err);
-      // console.log("ERROR DATA", err.response.data);
       setError1(Object.values(err.response.data).flat(2));
     } finally {
       setLoading(false);
@@ -62,11 +59,10 @@ const WorkCreateContextProvider = ({ children }) => {
     if (value === "all") {
       search.delete(query);
     } else {
-      search.set(query, value);
+      search.set(value, "category");
     }
 
     const url = `${location.pathname}?${search.toString()}`;
-
     navigate(url);
   };
 
@@ -79,56 +75,44 @@ const WorkCreateContextProvider = ({ children }) => {
           Authorization,
         },
       };
-      const res = await axios(`${API}/service/`, config);
-      console.log(res.data.results);
+      const res = await axios(`${API}categories/`, config);
+      console.log(res.data);
       dispatch({
         type: "GET_CATEGORIES",
-        payload: res.data.results,
+        payload: res.data,
       });
     } catch (err) {
       console.log(err);
     }
   }
 
-  // async function FilterCategory() {
-  //   let array = await axios(`${API}/service/`).data.results;
-  //   console.log(array);
-  // }
-  // FilterCategory();
+  async function getMainArray() {
+    let res = await axios(`${API_HUMANS}`);
+    setMainArray(res.data);
+  }
+  // ==================================
 
-  // async function getOneHuman() {
-  //   try {
-  //     const token = JSON.parse(localStorage.getItem("tokens"));
-  //     const Authorization = `Bearer ${token.access}`;
-  //     const config = {
-  //       headers: {
-  //         Authorization,
-  //       },
-  //     };
-  //     const res = await axios(`${API}/categories/`, config);
-  //     getCategories();
-  //     dispatch({
-  //       type: "GET_ONE_HUMAN",
-  //       payload: res.data.results,
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
+  let [category, setCategory] = useState(null);
+  useEffect(() => {
+    console.log(category);
+  }, [category]);
   return (
     <workCreateContext.Provider
       value={{
+        API_HUMANS,
+        API,
         handleSaveWork,
         getCategories,
-        // getOneHuman,
-        category: state.category,
-        pages: state.pages,
-
+        mainArray,
         fetchByParams,
-
+        setCategory,
+        getMainArray,
+        category,
+        humans: state.humans,
+        pages: state.pages,
         error1,
         loading,
+        categoryArray: state.categoryArray,
       }}
     >
       {children}
@@ -137,146 +121,3 @@ const WorkCreateContextProvider = ({ children }) => {
 };
 
 export default WorkCreateContextProvider;
-
-///////////////////////////////////////////////////////////////////////////////////////////
-
-// const INIT_STATE = {
-//   products: [],
-//   pages: 0,
-//   categories: [],
-//   oneProduct: null,
-// };
-
-// function reducer(state = INIT_STATE, action) {
-//   switch (action.type) {
-//     case "GET_PRODUCTS":
-//       return {
-//         ...state,
-//         products: action.payload.results,
-//         pages: Math.ceil(action.payload.count / 5),
-//       };
-//     case "GET_CATEGORIES":
-//       return {
-//         ...state,
-//         categories: action.payload,
-//       };
-//     case "GET_ONE_PRODUCT":
-//       return { ...state, oneProduct: action.payload };
-//     default:
-//       return state;
-//   }
-// }
-
-// const ProductsContextProvider = ({ children }) => {
-//   const [state, dispatch] = useReducer(reducer, INIT_STATE);
-
-//   async function getProducts() {
-//     try {
-//       const token = JSON.parse(localStorage.getItem("tokens"));
-//       const Authorization = `Bearer ${token.access}`;
-//       const config = {
-//         headers: {
-//           Authorization,
-//         },
-//       };
-//       const res = await axios(
-//         `${API}/products/${window.location.search}`,
-//         config
-//       );
-//       dispatch({
-//         type: "GET_PRODUCTS",
-//         payload: res.data,
-//       });
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
-
-//   async function createProduct(newProduct, navigate) {
-//     try {
-//       const token = JSON.parse(localStorage.getItem("tokens"));
-//       const Authorization = `Bearer ${token.access}`;
-//       const config = {
-//         headers: {
-//           Authorization,
-//         },
-//       };
-//       const res = axios.post(`${API}/products/`, newProduct, config);
-//       console.log(res);
-//       navigate("/products");
-//       getProducts();
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
-
-//   async function getCategories() {
-//     try {
-//       const token = JSON.parse(localStorage.getItem("tokens"));
-//       const Authorization = `Bearer ${token.access}`;
-//       const config = {
-//         headers: {
-//           Authorization,
-//         },
-//       };
-//       const res = await axios(`${API}/category/list`, config);
-//       dispatch({
-//         type: "GET_CATEGORIES",
-//         payload: res.data.results,
-//       });
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
-
-//   async function deleteProduct(id) {
-//     try {
-//       const token = JSON.parse(localStorage.getItem("tokens"));
-//       const Authorization = `Bearer ${token.access}`;
-//       const config = {
-//         headers: {
-//           Authorization,
-//         },
-//       };
-//       await axios.delete(`${API}/products/${id}/`, config);
-//       getProducts();
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
-
-//   async function toggleLike(id) {
-//     try {
-//       const token = JSON.parse(localStorage.getItem("tokens"));
-//       const Authorization = `Bearer ${token.access}`;
-//       const config = {
-//         headers: {
-//           Authorization,
-//         },
-//       };
-//       const res = await axios(`${API}/products/${id}/toggle_like`, config);
-//       getProducts();
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
-
-//   return (
-//     <productContext.Provider
-//       value={{
-//         products: state.products,
-//         pages: state.pages,
-//         categories: state.categories,
-//         oneProduct: state.oneProduct,
-
-//         getProducts,
-//         createProduct,
-//         getCategories,
-//         deleteProduct,
-//         toggleLike,
-//       }}
-//     >
-//       {children}
-//     </productContext.Provider>
-//   );
-// };

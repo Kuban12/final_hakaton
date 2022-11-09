@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 
 const themeNav = createTheme({
   palette: {
-    mode: "light",
+    mode: "dark",
     primary: {
       main: "#ffff",
     },
@@ -50,54 +50,55 @@ function ResponsiveAppBar() {
 
   const navigate = useNavigate();
   return (
-    <ThemeProvider theme={themeNav}>
-      <AppBar position="static">
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-            <div
-              variant="h6"
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              LOGO
-            </div>
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
+    <div className="navbar">
+      <ThemeProvider theme={themeNav}>
+        <AppBar position="static">
+          <Container maxWidth="xl">
+            <Toolbar disableGutters>
+              <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+              <div
+                variant="h6"
+                component="a"
+                href="/"
                 sx={{
-                  display: { xs: "block", md: "none" },
+                  mr: 2,
+                  display: { xs: "none", md: "flex" },
+                  color: "inherit",
+                  textDecoration: "none",
                 }}
               >
-                {/* /////////////////////////////////////////////////////////////
+                LOGO
+              </div>
+              <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{
+                    display: { xs: "block", md: "none" },
+                  }}
+                >
+                  {/* /////////////////////////////////////////////////////////////
                 <div
                   style={{ color: "black" }}
                   key="page"
@@ -105,95 +106,102 @@ function ResponsiveAppBar() {
                 >
                   <p style={{ color: "black" }}>page</p>
                 </div> */}
-              </Menu>
-            </Box>
-            <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-            <Typography
-              variant="h5"
-              component="a"
-              href=""
-              sx={{
-                mr: 2,
-                display: { xs: "flex", md: "none" },
-                flexGrow: 1,
-                fontFamily: "monospace",
-
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              LOGO
-            </Typography>
-            <Box
-              sx={{
-                color: "black",
-                flexGrow: 1,
-                display: { xs: "none", md: "flex" },
-              }}
-            >
-              {/* /////////////////////////////////////////////// */}
-              <Button
-                key="Найти специалиста"
-                onClick={(handleCloseNavMenu, () => navigate("/catalog"))}
-                style={{
-                  my: 2,
-                  color: "#7b92a4",
-                  fontSize: "10px",
-                  textDecoration: "none",
+                </Menu>
+              </Box>
+              <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+              <Typography
+                variant="h5"
+                component="a"
+                href=""
+                sx={{
+                  mr: 2,
+                  display: { xs: "flex", md: "none" },
+                  flexGrow: 1,
                   fontFamily: "monospace",
-                  border: "none",
-                  backgroundColor: "white",
-                  fontWeight: 700,
-                  lineHeight: "20px",
+
+                  letterSpacing: ".3rem",
+                  color: "inherit",
                   textDecoration: "none",
-                  marginLeft: "20px",
-                  display: "block",
                 }}
               >
-                Найти специалиста
-              </Button>
-              <Button
-                key="Стать исполнителем"
-                onClick={(handleCloseNavMenu, () => navigate("/becomeAWorker"))}
-                style={{
-                  my: 2,
-                  color: "#7b92a4",
-                  fontSize: "10px",
-                  textDecoration: "none",
-                  fontFamily: "monospace",
-                  border: "none",
-                  backgroundColor: "white",
-                  fontWeight: 700,
-                  lineHeight: "20px",
-                  textDecoration: "none",
-                  marginLeft: "20px",
-                  display: "block",
+                LOGO
+              </Typography>
+              <Box
+                sx={{
+                  color: "black",
+                  flexGrow: 1,
+                  display: { xs: "none", md: "flex" },
                 }}
               >
-                Стать исполнителем
-              </Button>
-            </Box>
-
-            {currentUser ? (
-              <Box sx={{ flexGrow: 0 }}>
+                {/* /////////////////////////////////////////////// */}
                 <Button
-                  sx={{
+                  key="Найти специалиста"
+                  onClick={(handleCloseNavMenu, () => navigate("/catalog"))}
+                  style={{
+                    my: 2,
                     color: "#7b92a4",
                     fontSize: "10px",
+                    textDecoration: "none",
                     fontFamily: "monospace",
+                    border: "none",
+                    backgroundColor: "white",
                     fontWeight: 700,
+                    lineHeight: "20px",
+                    textDecoration: "none",
+                    marginLeft: "20px",
+                    display: "block",
                   }}
-                  onClick={handleLogout}
                 >
-                  {" "}
-                  Выйти{" "}
+                  Найти специалиста
+                </Button>
+
+                <Button
+                  key="Стать исполнителем"
+                  onClick={
+                    (handleCloseNavMenu, () => navigate("/becomeAWorker"))
+                  }
+                  style={{
+                    my: 2,
+                    color: "#7b92a4",
+                    fontSize: "10px",
+                    textDecoration: "none",
+                    fontFamily: "monospace",
+                    border: "none",
+                    backgroundColor: "white",
+                    fontWeight: 700,
+                    lineHeight: "20px",
+                    textDecoration: "none",
+                    marginLeft: "20px",
+                    display: "block",
+                  }}
+                >
+                  Стать исполнителем
                 </Button>
               </Box>
-            ) : (
-              <Box sx={{ flexGrow: 0 }}>
-                <img src={icon} alt="" style={{ width: "10px" }} />
-                <Tooltip title="Open settings">
+
+              <img
+                src={"https://cdn-icons-png.flaticon.com/512/3126/3126608.png"}
+                alt=""
+                style={{ width: "30px" }}
+                onClick={() => navigate("/favorite")}
+              />
+              {currentUser ? (
+                <Box sx={{ flexGrow: 0 }}>
+                  <Button
+                    sx={{
+                      color: "#7b92a4",
+                      fontSize: "10px",
+                      fontFamily: "monospace",
+                      fontWeight: 700,
+                    }}
+                    onClick={handleLogout}
+                  >
+                    {" "}
+                    Выйти{" "}
+                  </Button>
+                </Box>
+              ) : (
+                <Box sx={{ flexGrow: 0 }}>
                   <Button
                     sx={{
                       color: "#7b92a4",
@@ -206,13 +214,13 @@ function ResponsiveAppBar() {
                     {" "}
                     Войти{" "}
                   </Button>
-                </Tooltip>
-              </Box>
-            )}
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </ThemeProvider>
+                </Box>
+              )}
+            </Toolbar>
+          </Container>
+        </AppBar>
+      </ThemeProvider>
+    </div>
   );
 }
 

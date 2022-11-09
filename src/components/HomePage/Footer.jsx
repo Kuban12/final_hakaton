@@ -1,4 +1,5 @@
 import React from "react";
+
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
@@ -12,10 +13,10 @@ const Footer = () => {
             <p className="footer_parag">Как стать исполнителем</p>
             <p className="footer_parag">Журнал</p>
             <p className="footer_parag">Дополнительные услуги</p>
-            <p className="footer_parag">Написать в поддержку</p>
             <p className="footer_parag" onClick={() => navigate("/payment")}>
               Купить VIP подписку
             </p>
+            <p className="footer_parag">О сервисе</p>
           </div>
           <div className="footer_media">
             <img
