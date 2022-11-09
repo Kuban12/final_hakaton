@@ -25,8 +25,14 @@ function reducer(state = INIT_STATE, action) {
   }
 }
 const API_HUMANS = "http://34.67.85.209/api/v1/service/";
+async function func() {
+  let res = await axios(API_HUMANS);
+  console.log(res);
+}
+func();
 const API = "http://34.67.85.209/api/v1/";
 const WorkCreateContextProvider = ({ children }) => {
+  // let [counterPages, setCounterPages] = useState(0);
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,7 +51,6 @@ const WorkCreateContextProvider = ({ children }) => {
         },
       };
       const res = await axios.post(`${API}service/`, formData, config);
-      // console.log(res.data);
       navigate("/login");
     } catch (err) {
       console.log("ERROR", err);
@@ -87,26 +92,30 @@ const WorkCreateContextProvider = ({ children }) => {
   }
 
   async function getMainArray() {
-    let res = await axios(`${API_HUMANS}${window.location.search}`);
-    setMainArray(res.data.results);
+    let res = await axios(`${API_HUMANS}`);
+    setMainArray(res.data);
   }
   // ==================================
-
+  // async function counterPage() {
+  //   let res = await axios(API_HUMANS);
+  //   setCounterPages(Math.ceil(res.data.length / 6));
+  // }
   let [category, setCategory] = useState(null);
-  useEffect(() => {
-    console.log(category);
-  }, [category]);
+  useEffect(() => {}, [category]);
   return (
     <workCreateContext.Provider
       value={{
         API_HUMANS,
         API,
+        // counterPages,
         handleSaveWork,
         getCategories,
-        mainArray,
         fetchByParams,
         setCategory,
         getMainArray,
+        // counterPage,
+        setMainArray,
+        mainArray,
         category,
         humans: state.humans,
         pages: state.pages,

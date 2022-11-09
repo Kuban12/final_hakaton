@@ -57,6 +57,7 @@ function ResponsiveAppBar() {
             <Toolbar disableGutters>
               <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
               <div
+                onClick={() => navigate("/")}
                 variant="h6"
                 component="a"
                 href="/"
@@ -97,16 +98,7 @@ function ResponsiveAppBar() {
                   sx={{
                     display: { xs: "block", md: "none" },
                   }}
-                >
-                  {/* /////////////////////////////////////////////////////////////
-                <div
-                  style={{ color: "black" }}
-                  key="page"
-                  onClick={handleCloseNavMenu}
-                >
-                  <p style={{ color: "black" }}>page</p>
-                </div> */}
-                </Menu>
+                ></Menu>
               </Box>
               <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
               <Typography
@@ -118,7 +110,6 @@ function ResponsiveAppBar() {
                   display: { xs: "flex", md: "none" },
                   flexGrow: 1,
                   fontFamily: "monospace",
-
                   letterSpacing: ".3rem",
                   color: "inherit",
                   textDecoration: "none",
@@ -178,7 +169,12 @@ function ResponsiveAppBar() {
                   Стать исполнителем
                 </Button>
               </Box>
-
+              <img
+                src={"https://cdn-icons-png.flaticon.com/512/3126/3126608.png"}
+                alt=""
+                style={{ width: "30px" }}
+                onClick={() => navigate("/favorite")}
+              />
               {currentUser ? (
                 <Box sx={{ flexGrow: 0 }}>
                   <Button

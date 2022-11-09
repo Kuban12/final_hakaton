@@ -9,6 +9,7 @@ import CatalogPage from "./pages/CatalogPage";
 import ForgotPassConfirmPage from "./pages/ForgotPassConfirmPage";
 import ForgotPassPage from "./pages/ForgotPassPage";
 import PaymentPage from "./pages/PaymentPage";
+import FavoritesPage from "./components/HomePage/FavoritesPage";
 
 const MainRoutes = () => {
   const PUBLIC_ROUTES = [
@@ -56,6 +57,11 @@ const MainRoutes = () => {
       link: "*",
       element: <NotFoundPage />,
       id: 9,
+    },
+    {
+      link: "/favorite",
+      element: <FavoritesPage />,
+      id: 10,
     },
   ];
 

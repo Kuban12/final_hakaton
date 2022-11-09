@@ -60,6 +60,7 @@ const BecomeAWorkerPage = () => {
 
   //   for price
   const [price, setPrice] = React.useState(0);
+  const [image, setImage] = useState(null);
 
   // custom
   function handleSave() {
@@ -91,6 +92,7 @@ const BecomeAWorkerPage = () => {
       desc: desc,
       price: price,
       category: category,
+      image: image,
     };
     handleSaveWork(formData, navigate);
 
@@ -100,6 +102,7 @@ const BecomeAWorkerPage = () => {
     setHour2("");
     setDesc("");
     setPrice("");
+    setImage("");
     // }
   }
 
@@ -405,6 +408,13 @@ const BecomeAWorkerPage = () => {
           InputProps={{
             endAdornment: <InputAdornment position="end">сом</InputAdornment>,
           }}
+        />
+      </div>
+      <div className="input__wrapper">
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files[0])}
         />
       </div>
       <div className="button">
