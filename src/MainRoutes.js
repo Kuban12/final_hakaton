@@ -10,7 +10,9 @@ import CatalogPage from "./pages/CatalogPage";
 import ForgotPassConfirmPage from "./pages/ForgotPassConfirmPage";
 import ForgotPassPage from "./pages/ForgotPassPage";
 import PaymentPage from "./pages/PaymentPage";
-import FavoritesPage from "./pages/FavoritesPage";
+import FavoritesPage from "./components/HomePage/FavoritesPage";
+import CartPage from "./pages/CartPage";
+import LikesPage from "./pages/LikesPage";
 
 const MainRoutes = () => {
   const PUBLIC_ROUTES = [
@@ -63,6 +65,21 @@ const MainRoutes = () => {
       link: "*",
       element: <NotFoundPage />,
       id: 9,
+    },
+    {
+      link: "/favorite",
+      element: <FavoritesPage />,
+      id: 10,
+    },
+    {
+      link: "/c",
+      element: <CartPage />,
+      id: 10,
+    },
+    {
+      link: "/l",
+      element: <LikesPage />,
+      id: 10,
     },
   ];
 

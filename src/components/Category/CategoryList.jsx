@@ -7,60 +7,70 @@ import { Pagination } from "@mui/material";
 import "../../styles/category.css";
 import PaginationCard from "./Pagination";
 import axios from "axios";
-
+import TextField from "@mui/material/TextField";
 const CategoryList = () => {
-  const { mainArray, categoryArray, humans, category, getMainArray, API } =
-    useWorkCreate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [search, setSearch] = useState(searchParams.get("q") || "");
+  const {
+    mainArray,
+    categoryArray,
+    humans,
+    category,
+    getMainArray,
+    API,
+    API_HUMANS,
+    counterPage,
+    setMainArray,
+  } = useWorkCreate();
   useEffect(() => {
     getMainArray();
   }, []);
-  const [page, setPage] = useState(1);
-  const itemsOnPage = 6;
+  let [counterPages, setCounterPages] = useState(1);
+  let items = 6;
+  let count = Math.ceil(mainArray.length / items);
+  function handlePage(e, p) {
+    setCounterPages(p);
+  }
   function currentData() {
-    const begin = (page - 1) * itemsOnPage;
-    const end = begin + itemsOnPage;
-    return humans.slice(begin, end);
+    const begin = (counterPages - 1) * items;
+    const end = begin + items;
+    return mainArray.slice(begin, end);
   }
-  async function counterPage() {
-    let res = await axios(API);
-    console.log(res.data.results.length / 6);
-    console.log(res.data.results);
-    return Math.ceil(res.data.results.length / 6);
-  }
-  counterPage();
+  currentData();
   return (
     <>
       <div>
         <div className="section">
+          <br />
           <FilterCategory className="sideBar" />
           <div className="container">
             {mainArray ? (
               category ? (
-                mainArray.map((item) => {
+                currentData().map((item) => {
                   if (item.category == category) {
                     return <HumanCard key={item.id} item={item} />;
                   }
                 })
               ) : (
-                mainArray.map((item) => <HumanCard key={item.id} item={item} />)
+                currentData().map((item) => (
+                  <HumanCard key={item.id} item={item} />
+                ))
               )
             ) : (
               <h3>loading...</h3>
             )}
           </div>
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search..."
-          />{" "}
-          <br />
         </div>
         <br />
         <br />
-        <PaginationCard />
+        <Pagination
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            margin: "1%",
+          }}
+          count={count}
+          page={counterPages}
+          onChange={handlePage}
+        />
       </div>
     </>
   );

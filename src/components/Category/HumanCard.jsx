@@ -26,16 +26,26 @@ function getLabelText(value) {
 const HumanCard = ({ item }) => {
   const [value, setValue] = React.useState(2);
   const [hover, setHover] = React.useState(-1);
+  const [like, setLike] = React.useState(false);
+
   const { addProductToFavorite } = useFav();
 
   return (
     <div>
-      <div className="blog-card spring-fever">
+      <div
+        className="blog-card spring-fever"
+        style={{
+          backgroundImage: `url(${item.image})`,
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
+      >
         <div className="title-content">
           <h3>{item.name}</h3>
           <hr />
           {/* <div className="intro">КАТЕГОРИЯ: {item.category}</div> */}
-          <div className="intro">ОПЫТ: {item.experience}</div>
+          <div className="intro">ОПЫТ: {item.experience} лет</div>
         </div>
         <div className="card-info">{item.desc}</div>
         <div className="utility-info">
@@ -46,7 +56,15 @@ const HumanCard = ({ item }) => {
             <li className="phone">С: {item.hour_from} : 00 </li>
             <li className="phone">До: {item.hour_to} : 00</li>
           </ul>
-          <button onClick={() => addProductToFavorite(item)}>fav</button>
+          <div style={{ display: "flex", margin: "0 auto" }}>
+            <img
+              src={"https://cdn-icons-png.flaticon.com/512/3126/3126608.png"}
+              alt=""
+              style={{ width: "30px" }}
+              onClick={() => addProductToFavorite(item)}
+            />
+            <h2 onClick={() => setLike(!like)}>{like ? "❤️" : "🤍"}</h2>
+          </div>
           <Box
             sx={{
               width: 200,

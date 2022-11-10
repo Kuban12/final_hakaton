@@ -9,18 +9,19 @@ import WorkCreateContextProvider, {
 import { workCreateContext } from "./contexts/WorkCreateContext";
 import Footer from "./components/HomePage/Footer";
 import Navbar from "./components/HomePage/Navbar";
+import FavContex from "./contexts/FavoritesContext";
 function App() {
   return (
     <>
       <BrowserRouter>
         <WorkCreateContextProvider>
-          <FavContext>
+          <FavContex>
             <AuthContext>
               <Navbar />
               <MainRoutes />
               <Footer />
             </AuthContext>
-          </FavContext>
+          </FavContex>
         </WorkCreateContextProvider>
       </BrowserRouter>
     </>

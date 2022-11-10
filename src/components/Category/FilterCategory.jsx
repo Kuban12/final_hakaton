@@ -15,20 +15,10 @@ const FilterCategory = () => {
     <>
       <div className="sidenav">
         <FormControl>
-          {/* <FormLabel
-            id="demo-controlled-radio-buttons-group"
-            className="sidenav"
-          >
-            Все категории
-          </FormLabel> */}
           <RadioGroup
             aria-labelledby="demo-controlled-radio-buttons-group"
             name="controlled-radio-buttons-group"
-            //custom
             defaultValue="all"
-            // onChange={(e) => {
-            //   fetchByParams("type", e.target.value);
-            // }}
             onChange={(e) => {
               setCategory(e.target.value);
             }}
