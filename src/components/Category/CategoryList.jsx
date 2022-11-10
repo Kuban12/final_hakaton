@@ -1,63 +1,76 @@
 import React, { useEffect, useState } from "react";
-import { useWorkCreate } from "../../contexts/workCreateContext";
+import { useWorkCreate } from "../../contexts/WorkCreateContext";
 import HumanCard from "../../components/Category/HumanCard";
 import { useSearchParams } from "react-router-dom";
 import FilterCategory from "./FilterCategory";
 import { Pagination } from "@mui/material";
-
+import "../../styles/category.css";
+import PaginationCard from "./Pagination";
+import axios from "axios";
+import TextField from "@mui/material/TextField";
 const CategoryList = () => {
-  const { category, getCategories } = useWorkCreate();
-  console.log(category);
+  const {
+    mainArray,
+    categoryArray,
+    humans,
+    category,
+    getMainArray,
+    API,
+    API_HUMANS,
+    counterPage,
+    setMainArray,
+  } = useWorkCreate();
   useEffect(() => {
-    getCategories();
+    getMainArray();
   }, []);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [search, setSearch] = useState(searchParams.get("q") || "");
-
-  useEffect(() => {
-    setSearchParams({
-      q: search,
-    });
-  }, [search]);
-
-  useEffect(() => {
-    getCategories();
-  }, [searchParams]);
-  //pagination
-
-  const [page, setPage] = useState(1);
-  const itemsOnPage = 6;
-
-  const count = Math.ceil(category.length / itemsOnPage);
-
-  const handlePage = (e, p) => {
-    setPage(p);
-  };
-
-  function currentData() {
-    const begin = (page - 1) * itemsOnPage;
-    const end = begin + itemsOnPage;
-    return category.slice(begin, end);
+  let [counterPages, setCounterPages] = useState(1);
+  let items = 6;
+  let count = Math.ceil(mainArray.length / items);
+  function handlePage(e, p) {
+    setCounterPages(p);
   }
+  function currentData() {
+    const begin = (counterPages - 1) * items;
+    const end = begin + items;
+    return mainArray.slice(begin, end);
+  }
+  currentData();
   return (
     <>
       <div>
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search..."
-        />{" "}
-        <br /> <br />
-        <FilterCategory />
-        {category ? (
-          currentData().map((item) => <HumanCard key={item.id} item={item} />)
-        ) : (
-          <h3>loading...</h3>
-        )}
+        <div className="section">
+          <br />
+          <FilterCategory className="sideBar" />
+          <div className="container">
+            {mainArray ? (
+              category ? (
+                currentData().map((item) => {
+                  if (item.category == category) {
+                    return <HumanCard key={item.id} item={item} />;
+                  }
+                })
+              ) : (
+                currentData().map((item) => (
+                  <HumanCard key={item.id} item={item} />
+                ))
+              )
+            ) : (
+              <h3>loading...</h3>
+            )}
+          </div>
+        </div>
         <br />
         <br />
-        <Pagination count={count} page={page} onChange={handlePage} />
+        <Pagination
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            margin: "1%",
+          }}
+          count={count}
+          page={counterPages}
+          onChange={handlePage}
+        />
       </div>
     </>
   );
